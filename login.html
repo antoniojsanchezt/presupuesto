@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="es-AR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Iniciar sesión · Mi Presupuesto</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --forest:#06281E;
+    --forest-2:#0A3A2A;
+    --emerald:#00BF72;
+    --emerald-d:#00A862;
+    --mist:#EEF5F1;
+    --surface:#FFFFFF;
+    --ink:#0C2A20;
+    --muted:#6B8479;
+    --line:#DBE7E1;
+    --danger:#D64545;
+    --radius:14px;
+    --shadow:0 1px 2px rgba(6,40,30,.05), 0 8px 24px rgba(6,40,30,.06);
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0;height:100%}
+  body{
+    font-family:"Inter", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    background:linear-gradient(160deg, var(--forest) 0%, var(--forest-2) 55%, var(--mist) 55%);
+    color:var(--ink);
+    -webkit-font-smoothing:antialiased;
+    display:flex;align-items:center;justify-content:center;
+    min-height:100vh;
+    padding:20px;
+  }
+  h1,h2{font-family:"Sora", system-ui, sans-serif; margin:0; letter-spacing:-.01em}
+  button{font-family:inherit; cursor:pointer}
+  input{font-family:inherit}
+
+  .card{
+    width:100%;max-width:380px;background:var(--surface);border:1px solid var(--line);
+    border-radius:var(--radius);box-shadow:0 20px 60px rgba(6,40,30,.30);
+    padding:30px 28px 26px;
+  }
+  .brand{display:flex;align-items:center;gap:10px;margin-bottom:22px}
+  .brand .dot{width:13px;height:13px;border-radius:50%;background:var(--emerald);
+    box-shadow:0 0 0 4px rgba(0,191,114,.20);flex:none}
+  .brand span{font-family:"Sora",sans-serif;font-weight:600;font-size:17px}
+
+  h1{font-size:20px;margin-bottom:4px}
+  .sub{font-size:13px;color:var(--muted);margin-bottom:22px}
+
+  label{display:block;font-size:12.5px;font-weight:600;color:var(--forest);margin-bottom:6px}
+  .field{margin-bottom:16px}
+  input[type="email"],input[type="password"]{
+    width:100%;border:1px solid var(--line);border-radius:9px;padding:11px 13px;font-size:14px;
+    color:var(--ink);background:#fff;outline:none;transition:border .14s, box-shadow .14s;
+  }
+  input[type="email"]:focus,input[type="password"]:focus{
+    border-color:var(--emerald);box-shadow:0 0 0 3px rgba(0,191,114,.12);
+  }
+
+  .btn-primary{
+    width:100%;border:none;background:var(--emerald);color:#04271A;font-weight:600;font-size:14.5px;
+    padding:0;height:42px;border-radius:9px;transition:background .15s, transform .05s;margin-top:6px;
+  }
+  .btn-primary:hover{background:var(--emerald-d)}
+  .btn-primary:active{transform:translateY(1px)}
+
+  .error{
+    display:none;margin-top:14px;background:#FDECEA;border:1px solid #F6D3CF;color:var(--danger);
+    font-size:13px;font-weight:500;padding:10px 12px;border-radius:9px;
+  }
+  .error.show{display:block}
+
+  .hint{margin-top:18px;font-size:11.5px;color:var(--muted);text-align:center}
+</style>
+</head>
+<body>
+
+  <div class="card">
+    <div class="brand"><span class="dot"></span><span>Mi Presupuesto</span></div>
+    <h1>Iniciar sesión</h1>
+    <p class="sub">Ingresá tus credenciales para acceder a tu presupuesto.</p>
+
+    <form id="loginForm" novalidate>
+      <div class="field">
+        <label for="email">Correo electrónico</label>
+        <input type="email" id="email" name="email" placeholder="tu@correo.com" required autocomplete="username">
+      </div>
+      <div class="field">
+        <label for="password">Contraseña</label>
+        <input type="password" id="password" name="password" placeholder="••••••••" required autocomplete="current-password">
+      </div>
+      <button type="submit" class="btn-primary">Ingresar</button>
+      <div class="error" id="errorMsg">Correo o contraseña incorrectos.</div>
+    </form>
+
+    <p class="hint">Acceso restringido · Skynext Argentina</p>
+  </div>
+
+<script>
+(function(){
+  "use strict";
+  var VALID_EMAIL = "prueba@gmail.com";
+  var VALID_PASS = "12345";
+
+  // si ya está logueado, no mostrar el login de nuevo
+  if (sessionStorage.getItem("presupuesto_auth") === "1") {
+    location.replace("index.html");
+    return;
+  }
+
+  var form = document.getElementById("loginForm");
+  var errorMsg = document.getElementById("errorMsg");
+
+  form.addEventListener("submit", function(e){
+    e.preventDefault();
+    var email = document.getElementById("email").value.trim().toLowerCase();
+    var pass = document.getElementById("password").value;
+
+    if (email === VALID_EMAIL && pass === VALID_PASS) {
+      sessionStorage.setItem("presupuesto_auth", "1");
+      location.replace("index.html");
+    } else {
+      errorMsg.classList.add("show");
+    }
+  });
+})();
+</script>
+</body>
+</html>

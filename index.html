@@ -4,6 +4,11 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Mi Presupuesto</title>
+<script>
+  if (sessionStorage.getItem("presupuesto_auth") !== "1") {
+    location.replace("login.html");
+  }
+</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
@@ -397,6 +402,7 @@
       <button class="icon-btn" id="exportBtn" title="Descargar copia de seguridad">↓ Exportar</button>
       <button class="icon-btn" id="importBtn" title="Cargar copia de seguridad">↑ Importar</button>
       <input type="file" id="importFile" accept="application/json">
+      <button class="icon-btn" id="logoutBtn" title="Cerrar sesión">⎋ Cerrar sesión</button>
     </div>
   </div>
 
@@ -1286,6 +1292,10 @@
     document.getElementById("exportBtn").addEventListener("click", exportData);
     document.getElementById("importBtn").addEventListener("click", function(){ document.getElementById("importFile").click(); });
     document.getElementById("importFile").addEventListener("change", importData);
+    document.getElementById("logoutBtn").addEventListener("click", function(){
+      sessionStorage.removeItem("presupuesto_auth");
+      location.replace("login.html");
+    });
 
     document.getElementById("manageCarteras").addEventListener("click", openCarteraModal);
     document.getElementById("closeCarteras").addEventListener("click", closeCarteraModal);
